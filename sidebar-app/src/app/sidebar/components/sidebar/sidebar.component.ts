@@ -23,11 +23,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    // subscription should be destroyed
   }
 
   getOrganizationUsers(): void {
     this.sidebarService.getOrganizationsUsers()
+    // .pipe() can be transformed with rxjs operators for better performance
       .subscribe(result => this.orgUsers.next(OrganizationUsersUtils.transform(result))) 
   }
 }
