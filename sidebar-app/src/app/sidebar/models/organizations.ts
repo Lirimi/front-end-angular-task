@@ -2,7 +2,7 @@ export interface InitialOrgUsers extends User {}
 
 export interface TranformedOrgUsers {
    name: string;
-   items: Item[] | User[];
+   items: Item[] & User[];
 }
 
 interface Item {

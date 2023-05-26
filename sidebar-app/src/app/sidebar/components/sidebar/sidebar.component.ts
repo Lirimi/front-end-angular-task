@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { SidebarService } from '../../services/sidebar.service';
 import { BehaviorSubject, reduce } from 'rxjs';
 import { OrganizationUsersUtils } from '../../utils/organization-users';
+import { TranformedOrgUsers } from '../../models/organizations';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,12 +12,14 @@ import { OrganizationUsersUtils } from '../../utils/organization-users';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
+  private orgUsers = new BehaviorSubject<TranformedOrgUsers[] | null>(null);
+  orgUsers$ = this.orgUsers.asObservable()
+
   constructor(private sidebarService: SidebarService) {
-    this.getOrganizationUsers()
   }
 
   ngOnInit(): void {
-    
+    this.getOrganizationUsers() 
   }
 
   ngOnDestroy(): void {
@@ -25,10 +28,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   getOrganizationUsers(): void {
     this.sidebarService.getOrganizationsUsers()
-      // .pipe(reduce(this.transform))
-      .subscribe(result => {
-        console.log(result)
-        console.log('Transformed Data', OrganizationUsersUtils.transform(result))
-      }) 
+      .subscribe(result => this.orgUsers.next(OrganizationUsersUtils.transform(result))) 
   }
 }
