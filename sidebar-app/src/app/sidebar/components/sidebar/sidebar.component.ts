@@ -1,34 +1,34 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
-import { BehaviorSubject, reduce } from 'rxjs';
+import { BehaviorSubject, takeUntil } from 'rxjs';
 import { OrganizationUsersUtils } from '../../utils/organization-users';
-import { TranformedOrgUsers } from '../../models/organizations';
+import { TransformedOrgUsers } from '../../models/organizations';
+import { BaseComponent } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush // recommended to be used because of permornce especially for big scalable applications (not neccesery in this case)
+  changeDetection: ChangeDetectionStrategy.OnPush, // recommended to be used because of permornce especially for big scalable applications (not neccesery in this case)
 })
-export class SidebarComponent implements OnInit, OnDestroy {
-
-  private orgUsers = new BehaviorSubject<TranformedOrgUsers[] | null>(null);
-  orgUsers$ = this.orgUsers.asObservable()
+export class SidebarComponent extends BaseComponent implements OnInit {
+  private orgUsers = new BehaviorSubject<TransformedOrgUsers[] | null>(null);
+  orgUsers$ = this.orgUsers.asObservable();
 
   constructor(private sidebarService: SidebarService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.getOrganizationUsers() 
-  }
-
-  ngOnDestroy(): void {
-    // subscription should be destroyed
+    this.getOrganizationUsers();
   }
 
   getOrganizationUsers(): void {
-    this.sidebarService.getOrganizationsUsers()
-    // .pipe() can be transformed with rxjs operators for better performance
-      .subscribe(result => this.orgUsers.next(OrganizationUsersUtils.transform(result))) 
+    this.sidebarService
+      .getOrganizationsUsers()
+      .pipe(takeUntil(this.isDestroyed))
+      .subscribe((result) => {
+        this.orgUsers.next(OrganizationUsersUtils.transform(result));
+      });
   }
 }

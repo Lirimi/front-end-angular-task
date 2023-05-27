@@ -1,16 +1,10 @@
-export interface InitialOrgUsers extends User {}
-
-export interface TranformedOrgUsers {
-   name: string;
-   items: Item[] & User[];
+export interface InitialOrgUsers {
+  id: string;
+  name: string;
 }
 
-interface Item {
-    name: string;
-    items: User[]
-}
-
-interface User {
-    id: string;
-    name: string;
+export interface TransformedOrgUsers {
+  name: string;
+  id?: string;
+  items?: TransformedOrgUsers[];
 }

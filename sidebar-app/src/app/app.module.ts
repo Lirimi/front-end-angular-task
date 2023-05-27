@@ -7,16 +7,9 @@ import { SidebarComponent } from './sidebar/components/sidebar/sidebar.component
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SidebarComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CommonModule
-  ],
+  declarations: [AppComponent, SidebarComponent],
+  imports: [BrowserModule, AppRoutingModule, CommonModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
