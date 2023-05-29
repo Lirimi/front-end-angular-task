@@ -21,6 +21,10 @@ $font-family: "Montserrat";
     border-radius: 16px;
     width: 54px;
     height: 54px;
+    cursor: pointer;
+  }
+  &__user-avatar {
+    cursor: pointer;
   }
 }
 
@@ -56,6 +60,7 @@ $font-family: "Montserrat";
       color: $secondary-color;
       display: flex;
       justify-content: space-between;
+      cursor: pointer;
     }
     svg {
       width: 12px;

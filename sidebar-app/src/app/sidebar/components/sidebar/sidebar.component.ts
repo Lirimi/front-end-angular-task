@@ -9,7 +9,7 @@ import { BaseComponent } from 'src/app/base/base.component';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // recommended to be used because of permornce especially for big scalable applications (not neccesery in this case)
+  changeDetection: ChangeDetectionStrategy.OnPush, // recommended to be used because of performance especially for big scalable applications (not necessary in this case)
 })
 export class SidebarComponent extends BaseComponent implements OnInit {
   private orgUsers = new BehaviorSubject<TransformedOrgUsers[] | null>(null);
@@ -23,7 +23,7 @@ export class SidebarComponent extends BaseComponent implements OnInit {
     this.getOrganizationUsers();
   }
 
-  getOrganizationUsers(): void {
+  private getOrganizationUsers(): void {
     this.sidebarService
       .getOrganizationsUsers()
       .pipe(takeUntil(this.isDestroyed))
